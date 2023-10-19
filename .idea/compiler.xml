@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="server" />
         <module name="notification" />
+        <module name="stock" />
         <module name="gateway" />
       </profile>
       <profile name="Annotation profile for product" enabled="true">
@@ -31,6 +32,7 @@
       <module name="notification" options="-parameters" />
       <module name="product" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="server" options="-parameters" />
+      <module name="stock" options="-parameters" />
     </option>
   </component>
 </project>
