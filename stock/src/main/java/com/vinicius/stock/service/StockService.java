@@ -42,4 +42,24 @@ public class StockService {
                 .retrieve()
                 .bodyToFlux(ProductResponse.class);
     }
+
+    public Flux<ProductResponse> ListProductsByCategory(String category){
+        logger.info("listando produtos por categoria");
+        return webClient
+                .get()
+                .uri("/product/category/" + category)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(ProductResponse.class);
+    }
+
+    public Flux<ProductResponse> ListProductsByName(String name){
+        logger.info("listando produtos por nome");
+        return webClient
+                .get()
+                .uri("/product/name/" + name)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(ProductResponse.class);
+    }
 }

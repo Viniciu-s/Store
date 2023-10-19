@@ -32,4 +32,16 @@ public class StockController {
         return service.ListAllProducts();
 
     }
+
+    @GetMapping("/product/category/{category}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<ProductResponse> getProductsByCategory(@PathVariable String category){
+        return service.ListProductsByCategory(category);
+    }
+
+    @GetMapping("/product/name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<ProductResponse> getProductsByName(@PathVariable String name){
+        return service.ListProductsByName(name);
+    }
 }
