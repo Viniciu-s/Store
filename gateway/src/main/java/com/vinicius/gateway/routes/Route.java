@@ -11,6 +11,10 @@ public class Route {
     @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
+                .route("user", r -> r
+                        .path("/user/**")
+                        .filters(f -> f.circuitBreaker(c -> c.setName("user").setFallbackUri("forward:/fallback")))
+                        .uri("http://localhost:8085/"))
                 .route("product", r -> r
                         .path("/product/**")
                         .filters(f -> f.circuitBreaker(c -> c.setName("product").setFallbackUri("forward:/fallback")))
