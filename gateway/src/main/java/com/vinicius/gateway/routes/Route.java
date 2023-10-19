@@ -19,6 +19,10 @@ public class Route {
                         .path("/notification/**")
                         .filters(f -> f.circuitBreaker(c -> c.setName("notification").setFallbackUri("forward:/fallback")))
                         .uri("http://localhost:8083/"))
+                .route("stock", r -> r
+                        .path("/stock/**")
+                        .filters(f -> f.circuitBreaker(c -> c.setName("stock").setFallbackUri("forward:/fallback")))
+                        .uri("http://localhost:8084/"))
                 .build();
     }
 }
