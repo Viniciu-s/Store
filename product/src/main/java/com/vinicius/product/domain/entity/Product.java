@@ -1,5 +1,6 @@
 package com.vinicius.product.domain.entity;
 
+import com.vinicius.product.domain.dto.ProductResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,15 @@ public class Product {
     private String description;
 
     public Product(){}
+
+    public Product(ProductResponse productResponse) {
+        this.id = productResponse.id();
+        this.name = productResponse.name();
+        this.category = productResponse.category();
+        this.price = productResponse.price();
+        this.image = productResponse.image();
+        this.description = productResponse.description();
+    }
 
     public Product(UUID id, String name, String category, BigDecimal price, String image, String description) {
         this.id = id;
