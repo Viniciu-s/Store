@@ -94,4 +94,4 @@ The functionality of this microservice is to notify the responsible party that s
 
 It simplifies client-microservice communication and allows microservices to remain isolated from each other, facilitating the maintenance, scalability, and evolution of the system as a whole.
 
-This tutorial is available in [Portuguese](README-pt-br.md)
+This tutorial is available in [Portuguese](README-portuguese.md)
