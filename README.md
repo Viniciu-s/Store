@@ -9,7 +9,6 @@ This project is divided into several independent microservices, each responsible
 - [My SQL](https://www.mysql.com/downloads/)
 - [Postman](https://www.postman.com/downloads)
 - [RabbitMQ](https://www.rabbitmq.com/download.html)
-- [Docker](https://www.docker.com/products/docker-desktop/)
 
 ## Microservices
 
