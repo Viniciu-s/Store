@@ -1,7 +1,7 @@
 # Visão Geral
 Este projeto é dividido em vários microserviços independentes, cada um responsável por uma funcionalidade específica, permitindo que eles sejam escalados e gerenciados de forma independente.
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) ![RabbitMQ](https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) ![RabbitMQ](https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
 
 
 ## Requisitos
@@ -9,7 +9,6 @@ Este projeto é dividido em vários microserviços independentes, cada um respon
 - [My SQL](https://www.mysql.com/downloads/)
 - [Postman](https://www.postman.com/downloads)
 - [RabbitMQ](https://www.rabbitmq.com/download.html)
-- [Docker](https://www.docker.com/products/docker-desktop/)
 
 ## Microserviços
 
