@@ -3,11 +3,13 @@ package com.vinicius.stock.service;
 import com.vinicius.stock.dto.ProductResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Base64;
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -19,7 +21,10 @@ public class StockService {
     private static final Logger logger = LoggerFactory.getLogger(StockService.class);
 
     public StockService(WebClient.Builder builder) {
-        webClient = builder.baseUrl("http://localhost:8080").build();
+        webClient = builder
+                .baseUrl("http://localhost:8080")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString("username:password".getBytes()))
+                .build();
 
     }
 
