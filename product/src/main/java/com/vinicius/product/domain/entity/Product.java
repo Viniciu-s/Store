@@ -1,11 +1,7 @@
 package com.vinicius.product.domain.entity;
 
 import com.vinicius.product.domain.dto.ProductResponse;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -14,15 +10,21 @@ import java.util.UUID;
 @Table(name = "tb_product")
 public class Product {
 
-    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String category;
+    @Column(nullable = false)
     private BigDecimal price;
+    @Column(nullable = false)
     private String image;
+    @Column(nullable = false)
     private String description;
+    @ManyToOne
+    private Brand brand;
 
     public Product(){}
 
