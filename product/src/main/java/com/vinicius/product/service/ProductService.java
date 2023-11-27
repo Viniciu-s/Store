@@ -1,10 +1,13 @@
 package com.vinicius.product.service;
 
+import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
 import com.vinicius.product.domain.entity.Product;
 import com.vinicius.product.exceptions.ProductNotFoundException;
 import com.vinicius.product.mapper.ProductMapper;
 import com.vinicius.product.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +31,19 @@ public class ProductService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public ProductResponse createProduct(ProductResponse productResponse) {
-        Product product = productMapper.productResponseToProduct(productResponse);
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
+
+    public ProductResponse createProduct(ProductRequest productRequest) {
+        logger.info("Criando produtos");
+        Product product = productMapper.productRequestToProduct(productRequest);
         repository.save(product);
         rabbitTemplate.convertAndSend("product.ex", "", product);
         return productMapper.productToProductResponse(product);
     }
 
     public List<ProductResponse> listProducts() {
+        logger.info("Listando produtos");
         List<Product> products = repository.findAll();
         return products.stream()
                 .map(productMapper::productToProductResponse)
@@ -43,29 +51,33 @@ public class ProductService {
     }
 
     public ProductResponse searchProductForId(UUID id) {
+        logger.info("Buscando produtos");
         Optional<Product> productOptional = repository.findById(id);
         return productOptional.map(productMapper::productToProductResponse)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id " + id));
+                .orElseThrow(() -> new ProductNotFoundException("Produto não encontrado com o id: " + id));
     }
 
-    public ProductResponse updateProduct(UUID id, ProductResponse dto) {
-        Product product = productMapper.productResponseToProduct(dto);
+    public ProductResponse updateProduct(UUID id, ProductRequest productRequest) {
+        logger.info("Atualizando produtos");
+        Product product = productMapper.productRequestToProduct(productRequest);
         product.setId(id);
         product = repository.save(product);
         return productMapper.productToProductResponse(product);
     }
 
     public boolean deleteProduct(UUID id) {
+        logger.info("Deletando produtos");
         Optional<Product> productOptional = repository.findById(id);
         if (productOptional.isPresent()) {
             repository.deleteById(id);
             return true;
         } else {
-            throw new ProductNotFoundException("Produto não encontrado com ID: " + id);
+            throw new ProductNotFoundException("Produto não encontrado com o id: " + id);
         }
     }
 
     public List<ProductResponse> listProductsByCategory(String category) {
+        logger.info("Listando produtos por categoria");
         List<Product> products = repository.findByCategory(category);
         return products.stream()
                 .map(productMapper::productToProductResponse)
@@ -73,6 +85,7 @@ public class ProductService {
     }
 
     public List<ProductResponse> listProductsByName(String name) {
+        logger.info("Listando produtos por nome");
         List<Product> products = repository.findByName(name);
         return products.stream()
                 .map(productMapper::productToProductResponse)
