@@ -13,7 +13,8 @@ public class RouterValidator {
             "/user/register",
             "/user/login",
             "/product/**",
-            "/stock/product/**"
+            "/stock/product/**",
+            "/brand/**"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
