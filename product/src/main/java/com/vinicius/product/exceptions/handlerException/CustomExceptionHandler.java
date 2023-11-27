@@ -1,5 +1,6 @@
 package com.vinicius.product.exceptions.handlerException;
 
+import com.vinicius.product.exceptions.BrandNotFoundException;
 import com.vinicius.product.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public final ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException e) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        body.put("message", e.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BrandNotFoundException.class)
+    public final ResponseEntity<Object> handleBrandNotFoundException(BrandNotFoundException e) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("message", e.getMessage());
