@@ -1,5 +1,6 @@
 package com.vinicius.product.controller;
 
+import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
 import com.vinicius.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -19,13 +20,13 @@ public class ProductController {
 
     private final ProductService service;
 
-    ProductController(ProductService service){
+    public ProductController(ProductService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<EntityModel<ProductResponse>> createProduct(@RequestBody @Valid ProductResponse productResponse) {
-        ProductResponse product = service.createProduct(productResponse);
+    public ResponseEntity<EntityModel<ProductResponse>> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+        ProductResponse product = service.createProduct(productRequest);
         EntityModel<ProductResponse> resource = EntityModel.of(product);
         resource.add(Link.of("/product/" + product.id()).withSelfRel());
         return ResponseEntity.status(HttpStatus.CREATED).body(resource);
@@ -49,9 +50,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EntityModel<ProductResponse>> updateProduct(
-            @PathVariable UUID id, @RequestBody ProductResponse dto) {
-        ProductResponse updatedProduct = service.updateProduct(id, dto);
+    public ResponseEntity<EntityModel<ProductResponse>> updateProduct(@PathVariable UUID id, @RequestBody @Valid ProductRequest productRequest) {
+        ProductResponse updatedProduct = service.updateProduct(id, productRequest);
         EntityModel<ProductResponse> resource = EntityModel.of(updatedProduct);
         resource.add(Link.of("/product/" + id).withSelfRel());
         return ResponseEntity.ok(resource);
