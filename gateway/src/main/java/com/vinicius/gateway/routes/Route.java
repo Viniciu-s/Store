@@ -20,7 +20,11 @@ public class Route {
         return builder.routes()
                 .route("user", r -> r
                         .path("/user/**")
-                        .filters(f -> f.circuitBreaker(c -> c.setName("user").setFallbackUri("forward:/fallback")))
+                        .filters(f -> f
+                                .circuitBreaker(c -> c
+                                        .setName("user")
+                                        .setFallbackUri("forward:/fallback"))
+                                .filter(filter))
                         .uri("http://localhost:8085/"))
                 .route("product", r -> r
                         .path("/product/**")
@@ -32,14 +36,18 @@ public class Route {
                         .uri("http://localhost:8082/"))
                 .route("notification", r -> r
                         .path("/notification/**")
-                        .filters(f -> f.circuitBreaker(c -> c.setName("notification").setFallbackUri("forward:/fallback")))
+                        .filters(f -> f
+                                .circuitBreaker(c -> c
+                                        .setName("notification")
+                                        .setFallbackUri("forward:/fallback")))
                         .uri("http://localhost:8083/"))
                 .route("stock", r -> r
                         .path("/stock/**")
                         .filters(f -> f
                                 .circuitBreaker(c -> c
                                         .setName("stock")
-                                        .setFallbackUri("forward:/fallback")))
+                                        .setFallbackUri("forward:/fallback"))
+                                .filter(filter))
                         .uri("http://localhost:8084/"))
                 .build();
     }
