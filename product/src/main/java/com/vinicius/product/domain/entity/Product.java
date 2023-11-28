@@ -13,15 +13,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private String category;
-    @Column(nullable = false)
     private BigDecimal price;
-    @Column(nullable = false)
     private String image;
-    @Column(nullable = false)
+    private String color;
+    private String size;
     private String description;
     @ManyToOne
     private Brand brand;
@@ -34,15 +31,19 @@ public class Product {
         this.category = productResponse.category();
         this.price = productResponse.price();
         this.image = productResponse.image();
+        this.color = productResponse.color();
+        this.size = productResponse.size();
         this.description = productResponse.description();
     }
 
-    public Product(UUID id, String name, String category, BigDecimal price, String image, String description) {
+    public Product(UUID id, String name, String category, BigDecimal price, String image, String size, String color ,String description) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.image = image;
+        this.color = color;
+        this.size = size;
         this.description = description;
     }
 
@@ -79,6 +80,22 @@ public class Product {
     public String getImage() {return image;}
 
     public void setImage(String image) {this.image = image;}
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     public String getDescription() {return description;}
 

@@ -3,7 +3,9 @@ CREATE TABLE tb_product (
     name VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    image VARCHAR(255),
+    image VARCHAR(255) NOT NULL,
+    color VARCHAR(255) NOT NULL,
+    size VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     CONSTRAINT unique_product_name UNIQUE (name)
 );
