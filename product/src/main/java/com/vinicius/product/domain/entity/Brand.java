@@ -1,5 +1,6 @@
 package com.vinicius.product.domain.entity;
 
+import com.vinicius.product.domain.dto.BrandResponse;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class Brand {
     @Column(nullable = false)
     private String brandName;
 
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> products;
 
     public Brand() {
@@ -25,6 +26,11 @@ public class Brand {
     public Brand(UUID id, String brandName) {
         this.id = id;
         this.brandName = brandName;
+    }
+
+    public Brand(BrandResponse brandResponse) {
+        this.id = brandResponse.id();
+        this.brandName = brandResponse.brandName();
     }
 
     public UUID getId() {
