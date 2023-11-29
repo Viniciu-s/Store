@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
 
+    @Cacheable(value = "createProduct")
     public ProductResponse createProduct(ProductRequest productRequest) {
         logger.info("Criando produtos");
         Product product = productMapper.productRequestToProduct(productRequest);
@@ -42,6 +44,7 @@ public class ProductService {
         return productMapper.productToProductResponse(product);
     }
 
+    @Cacheable(value = "listProducts")
     public List<ProductResponse> listProducts() {
         logger.info("Listando produtos");
         List<Product> products = repository.findAll();
@@ -50,6 +53,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "searchProductForId")
     public ProductResponse searchProductForId(UUID id) {
         logger.info("Buscando produtos");
         Optional<Product> productOptional = repository.findById(id);
@@ -57,6 +61,7 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Produto não encontrado com o id: " + id));
     }
 
+    @Cacheable(value = "updateProduct")
     public ProductResponse updateProduct(UUID id, ProductRequest productRequest) {
         logger.info("Atualizando produtos");
         Product product = productMapper.productRequestToProduct(productRequest);
@@ -65,6 +70,7 @@ public class ProductService {
         return productMapper.productToProductResponse(product);
     }
 
+    @Cacheable(value = "deleteProduct")
     public boolean deleteProduct(UUID id) {
         logger.info("Deletando produtos");
         Optional<Product> productOptional = repository.findById(id);
@@ -76,6 +82,7 @@ public class ProductService {
         }
     }
 
+    @Cacheable(value = "listProductsByCategory")
     public List<ProductResponse> listProductsByCategory(String category) {
         logger.info("Listando produtos por categoria");
         List<Product> products = repository.findByCategory(category);
@@ -84,9 +91,28 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "listProductsByName")
     public List<ProductResponse> listProductsByName(String name) {
         logger.info("Listando produtos por nome");
         List<Product> products = repository.findByName(name);
+        return products.stream()
+                .map(productMapper::productToProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Cacheable(value = "listProductsByColor")
+    public List<ProductResponse> listProductsByColor(String color) {
+        logger.info("Listando produtos por cor");
+        List<Product> products = repository.findByColor(color);
+        return products.stream()
+                .map(productMapper::productToProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Cacheable(value = "listProductsBySize")
+    public List<ProductResponse> listProductsBySize(String size) {
+        logger.info("Listando produtos por tamanho");
+        List<Product> products = repository.findBySize(size);
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
