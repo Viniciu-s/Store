@@ -18,12 +18,16 @@ public class NotificationListener {
                 Nome: %s
                 Categoria: %s
                 Valor: %s
+                Cor: %s
+                Tamanho: %s
                 Descrição: %s
                 """.formatted(
                 productResponse.id(),
                 productResponse.name(),
                 productResponse.category(),
                 productResponse.price(),
+                productResponse.color(),
+                productResponse.size(),
                 productResponse.description());
         logger.info("Produto criado " + message);
     }

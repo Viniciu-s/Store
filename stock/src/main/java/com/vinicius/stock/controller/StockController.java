@@ -44,4 +44,16 @@ public class StockController {
     public Flux<ProductResponse> getProductsByName(@PathVariable String name){
         return service.ListProductsByName(name);
     }
+
+    @GetMapping("/product/color/{color}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<ProductResponse> getProductsByColor(@PathVariable String color){
+        return service.ListProductsByColor(color);
+    }
+
+    @GetMapping("/product/size/{size}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<ProductResponse> getProductsBySize(@PathVariable String size){
+        return service.ListProductsBySize(size);
+    }
 }

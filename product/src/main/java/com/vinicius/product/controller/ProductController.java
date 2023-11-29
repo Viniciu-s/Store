@@ -72,4 +72,14 @@ public class ProductController {
     public List<ProductResponse> getProductsByName(@PathVariable String name) {
         return service.listProductsByName(name);
     }
+
+    @GetMapping("/color/{color}")
+    public List<ProductResponse> getProductsByColor(@PathVariable String color) {
+        return service.listProductsByColor(color);
+    }
+
+    @GetMapping("/size/{size}")
+    public List<ProductResponse> getProductsBySize(@PathVariable String size) {
+        return service.listProductsBySize(size);
+    }
 }

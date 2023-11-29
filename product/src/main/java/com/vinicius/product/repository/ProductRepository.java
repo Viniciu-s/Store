@@ -10,4 +10,8 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findByCategory(String category);
 
     List<Product> findByName(String name);
+
+    List<Product> findByColor(String color);
+
+    List<Product> findBySize(String size);
 }
