@@ -1,4 +1,4 @@
-package com.vinicius.product.service;
+package com.vinicius.product.service.impl;
 
 import com.vinicius.product.domain.dto.BrandRequest;
 import com.vinicius.product.domain.dto.BrandResponse;
@@ -6,6 +6,7 @@ import com.vinicius.product.domain.entity.Brand;
 import com.vinicius.product.exceptions.BrandNotFoundException;
 import com.vinicius.product.mapper.ProductMapper;
 import com.vinicius.product.repository.BrandRepository;
+import com.vinicius.product.service.IBrandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,20 +20,20 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class BrandService {
+public class BrandServiceImpl implements IBrandService {
 
     private final BrandRepository repository;
     private final ProductMapper productMapper;
     private final RabbitTemplate rabbitTemplate;
 
     @Autowired
-    public BrandService(BrandRepository repository, ProductMapper productMapper, RabbitTemplate rabbitTemplate) {
+    public BrandServiceImpl(BrandRepository repository, ProductMapper productMapper, RabbitTemplate rabbitTemplate) {
         this.repository = repository;
         this.productMapper = productMapper;
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Cacheable(value = "createBrand")
     public BrandResponse createBrand(BrandRequest brandRequest) {

@@ -48,4 +48,12 @@ public class Brand {
     public void setBrandName(String brandName) {
         this.brandName = brandName;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

@@ -2,7 +2,7 @@ package com.vinicius.product.controller;
 
 import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
-import com.vinicius.product.service.ProductService;
+import com.vinicius.product.service.impl.ProductServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductService service;
+    private final ProductServiceImpl service;
 
-    public ProductController(ProductService service) {
+    public ProductController(ProductServiceImpl service) {
         this.service = service;
     }
 

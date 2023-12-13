@@ -2,7 +2,7 @@ package com.vinicius.product.controller;
 
 import com.vinicius.product.domain.dto.BrandRequest;
 import com.vinicius.product.domain.dto.BrandResponse;
-import com.vinicius.product.service.BrandService;
+import com.vinicius.product.service.impl.BrandServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/brand")
 public class BrandController {
 
-    private final BrandService service;
+    private final BrandServiceImpl service;
 
-    public BrandController(BrandService service) {
+    public BrandController(BrandServiceImpl service) {
         this.service = service;
     }
 
