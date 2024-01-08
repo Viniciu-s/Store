@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,7 @@ public class BrandServiceImpl implements IBrandService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    @Cacheable(value = "createBrand")
+    @Cacheable(value = "brands")
     public BrandResponse createBrand(BrandRequest brandRequest) {
         logger.info("Criando marcas");
         Brand brand = productMapper.brandRequestToBrand(brandRequest);
@@ -44,7 +46,7 @@ public class BrandServiceImpl implements IBrandService {
         return productMapper.brandToBrandResponse(brand);
     }
 
-    @Cacheable(value = "ListBrands")
+    @Cacheable(value = "brands")
     public List<BrandResponse> listBrands() {
         logger.debug("Listando marcas");
         List<Brand> brands = repository.findAll();
@@ -53,7 +55,7 @@ public class BrandServiceImpl implements IBrandService {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(value = "searchBrandForId")
+    @Cacheable(value = "brands")
     public BrandResponse searchBrandForId(UUID id) {
         logger.info("Listando marcas por id");
         Optional<Brand> brandOptional = repository.findById(id);
@@ -61,7 +63,7 @@ public class BrandServiceImpl implements IBrandService {
                 .orElseThrow(() -> new BrandNotFoundException("Marca não encontrada com o id: " + id));
     }
 
-    @Cacheable(value = "updateBrand")
+    @CachePut(value = "brands")
     public BrandResponse updateBrand(UUID id, BrandRequest brandRequest) {
         logger.info("Atualizando marcas");
         Brand brand = productMapper.brandRequestToBrand(brandRequest);
@@ -70,7 +72,7 @@ public class BrandServiceImpl implements IBrandService {
         return productMapper.brandToBrandResponse(brand);
     }
 
-    @Cacheable(value = "deleteBrand")
+    @CacheEvict(value = "brands")
     public boolean deleteBrand(UUID id) {
         logger.info("Deletando marcas");
         Optional<Brand> brandOptional = repository.findById(id);

@@ -2,13 +2,20 @@ package com.vinicius.product.domain.entity;
 
 import com.vinicius.product.domain.dto.BrandResponse;
 import jakarta.persistence.*;
+import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_brand")
-public class Brand {
+@RedisHash("Brand")
+public class Brand implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

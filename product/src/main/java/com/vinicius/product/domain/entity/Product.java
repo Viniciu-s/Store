@@ -2,13 +2,20 @@ package com.vinicius.product.domain.entity;
 
 import com.vinicius.product.domain.dto.ProductResponse;
 import jakarta.persistence.*;
+import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_product")
-public class Product {
+@RedisHash("Product")
+public class Product implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,6 +35,7 @@ public class Product {
     @Column(nullable = false)
     private String description;
     @ManyToOne
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     public Product(){}
@@ -43,7 +51,7 @@ public class Product {
         this.description = productResponse.description();
     }
 
-    public Product(UUID id, String name, String category, BigDecimal price, String image, String size, String color ,String description) {
+    public Product(UUID id, String name, String category, BigDecimal price, String image, String size, String color ,String description, Brand brand) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -52,6 +60,7 @@ public class Product {
         this.color = color;
         this.size = size;
         this.description = description;
+        this.brand = brand;
     }
 
     public UUID getId() {return id;}
@@ -107,4 +116,12 @@ public class Product {
     public String getDescription() {return description;}
 
     public void setDescription(String description) {this.description = description;}
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 }
