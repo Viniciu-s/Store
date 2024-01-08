@@ -35,11 +35,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.vinicius.product" level="debug" >
+    <logger name="com.vinicius.product" level="info" >
         <appender-ref ref="app"/>
         <appender-ref ref="STDOUT"/>
     </logger>
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="splunk"/>
     </root>
 </configuration>
