@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,13 +27,13 @@ public class BrandRepositoryTest {
     @Autowired
     EntityManager entityManager;
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductRepositoryTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(BrandRepositoryTest.class);
 
     @Test
     @DisplayName("Sucesso ao consultar marca por nome")
     void findByBrandNameCase1() {
         String brandName = "adidas";
-        List<Product> adidasProducts = Arrays.asList(
+        List<Product> adidasProducts = List.of(
                 new Product()
         );
         BrandResponse brandResponse = new BrandResponse(UUID.randomUUID(), "adidas", adidasProducts);
