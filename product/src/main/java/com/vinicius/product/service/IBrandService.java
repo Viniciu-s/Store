@@ -11,6 +11,7 @@ public interface IBrandService{
     BrandResponse createBrand(BrandRequest brandRequest);
     List<BrandResponse> listBrands();
     BrandResponse searchBrandForId(UUID id);
+    List<BrandResponse> listBrandsByName(String brandName);
     BrandResponse updateBrand(UUID id, BrandRequest brandRequest);
     boolean deleteBrand(UUID id);
 }

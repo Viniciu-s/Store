@@ -1,5 +1,6 @@
 package com.vinicius.product.repository;
 
+import com.vinicius.product.domain.dto.BrandResponse;
 import com.vinicius.product.domain.dto.ProductResponse;
 import com.vinicius.product.domain.entity.Product;
 import jakarta.persistence.EntityManager;
@@ -33,7 +34,7 @@ class ProductRepositoryTest {
     @DisplayName("Sucesso ao consultar produto por nome")
     void findByNameCase1() {
         String name = "camiseta";
-        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada");
+        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada", new BrandResponse(UUID.randomUUID(), "Nike",null));
         this.createProduct(productResponse);
 
         List<Product> result = this.repository.findByName(name);
@@ -56,7 +57,7 @@ class ProductRepositoryTest {
     @DisplayName("Sucesso ao consultar produto por categoria")
     void findByCategoryCase1() {
         String category = "camisetas";
-        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada");
+        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada", new BrandResponse(UUID.randomUUID(), "Nike",null));
         this.createProduct(productResponse);
 
         List<Product> result = this.repository.findByCategory(category);

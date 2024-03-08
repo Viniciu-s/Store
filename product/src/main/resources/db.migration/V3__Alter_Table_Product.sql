@@ -1,1 +1,0 @@
-ALTER TABLE tb_product ADD COLUMN brand_id UUID;
