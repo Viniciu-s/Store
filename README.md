@@ -10,87 +10,97 @@ This project is divided into several independent microservices, each responsible
 - [Postman](https://www.postman.com/downloads)
 - [RabbitMQ](https://www.rabbitmq.com/download.html)
 
-## Microservices
+## Usage
+- Start the application with Maven
+- The API will be accessible at http://localhost:8080
 
-# `Server`
-
-Each microservice, upon startup, registers itself with the Eureka Server, providing its name, IP address, port, and other relevant information.
-
-![Eureka](https://github.com/Viniciu-s/microservices/assets/84327394/a887792a-0bc2-425d-80ba-eae78f6803b8)
-
-
-# `Product-service`
-
-Before we can register, update, and delete products in our database, it is necessary to authenticate the user to validate access.
-
+## Endpoints
+`API PRODUCT`
+```
+POST /brand - Create a new brand
+GET /brand - List brands
+GET /brand/{id} - List brands by id
+GET /brand/{brandName} - List brands by name
+PUT /brand/{id} - update brand by id
+DELETE /brand/{id} - delete brand by id
+```
+```json
+{
+    "brandName": "Playstation"
+}
+```
 
 ```
-URL for registering the user.
-http://localhost:8080/auth/register
+POST /product - Create a new product
+GET /product - List Products
+GET /product/{id} - List product by id
+PUT /product/{id} - Update product by id
+DELETE /product/{id} - Delete product
+GET /product/category/{category} - List products by category
+GET /product/name/{name} - List products by name
+GET /product/color/{color} - List products by color
+GET /product/size/{size} - List products by size
 ```
-![POST user](https://github.com/Viniciu-s/microservices/assets/84327394/c3da089c-c65e-48ef-8f1f-71a539bd4b12)
-
+```json
+{
+    "name": "Playstation 5",
+    "category": "videogames",
+    "price": 1500,
+    "image": "",
+    "color": "branco",
+    "size": "null",
+    "description": "Playstation 5 com 2 controles",
+    "brand": {
+        "id": "brand id",
+        "brandName": "Playstation"
+    }
+}
 ```
-Immediately afterward, it's necessary to log in with the created user.
-http://localhost:8080/auth/login
-After logging in, a token will be generated.
+
+`APU USER`
 ```
-![POST user login](https://github.com/Viniciu-s/microservices/assets/84327394/019e3da0-d73b-408f-8f91-771137390f45)
-
+POST /user/register - register a new user
 ```
-Now it's necessary to validate the token generated with the user.
+```json
+{
+    "username": "user",
+    "password": "password",
+    "role": "ADMIN"
+}
 ```
-![POST validação](https://github.com/Viniciu-s/microservices/assets/84327394/944de9ab-183c-44fc-b80e-a4f456e401df)
-
 ```
-Now we can register our product.
-http://localhost:8080/product
-We can follow the same logic for updating, listing, and deleting products.
-Note that the user was created with the "ADMIN" role. If the user is created with the "USER" role, they will only have access to the GET method.
+POST /user/login - login with your user for generate a token
 ```
-![POST produto criado](https://github.com/Viniciu-s/microservices/assets/84327394/813e0c50-4584-49d9-bcd7-fd878cc829b7)
-
+```json
+{
+    "username": "user",
+    "password": "password"
+}
 ```
-To filter products by category, select the category of the products registered in your system. It's also possible to filter products by name.
-The URL image above shows how to perform this action. If you want to filter by name, just follow the same logic, replacing /category/{category} with /name/{name}.
+
+`API GATEWAY`
 ```
-![CATEGORY](https://github.com/Viniciu-s/microservices/assets/84327394/03df8da9-d5f5-442a-923a-abca940ce5e2)
-
-
-# `Stock`
-The stock API is used, for example, by other employees to query the products that exist in the system, consuming the product-service API where product registration was performed by an authenticated user.
-
+GET /fallback - shows a message when the service is down
 ```
-URL to register the user.
-http://localhost:8080/auth/register
+````json
+{
+    "message": "Serviço indisponível no momento."
+}
+````
+
+`API STOCK`
 ```
-![GET STOCK](https://github.com/Viniciu-s/microservices/assets/84327394/726e31b9-3d5c-41ad-90ca-07520542c4e8)
+GET /product - List Products
+GET /product/{id} - List product by id
+GET /product/category/{category} - List products by category
+GET /product/name/{name} - List products by name
+GET /product/color/{color} - List products by color
+GET /product/size/{size} - List products by size
+GET /brand - List brands
+GET /brand/{id} - List brands by id
+GET /brand/{brandName} - List brands by name
+```
 
+## Contributing
 
-
-# `Exchanges RabbitMQ`
-
-![Exchange RabitMQ](https://github.com/Viniciu-s/microservices/assets/84327394/45d67cf2-0933-4174-897a-4f6cac8aceae)
-
-The fanoutExchange and deadLetterExchange methods create and return instances of fanout-type exchanges. The notification exchange forwards messages to consumer queues, and the dead-letter exchange is used for handling undelivered messages.
-
-
-# `Queues RabbitMQ`
-
-![Queue RabbitMQ](https://github.com/Viniciu-s/microservices/assets/84327394/c110f0f6-935e-45e3-91e0-ae7093065693)
-
-The queueNotification and queueDlqNotification methods create and return instances of queues, one for notifications and another for the dead-letter queue of notifications, respectively. The notification queue is configured as non-durable and associated with a dead-letter exchange. The bindProduct and bindDlxProduct methods create and return instances of bindings, which define the relationship between queues and exchanges. The bindProduct binding associates the notification queue with the notification exchange, and the bindDlxProduct binding associates the dead-letter queue with the dead-letter exchange.
-
-# `Notification-service`
-
-The functionality of this microservice is to notify the responsible party that someone has created a product in the Product-service.
-
-![notificação](https://github.com/Viniciu-s/microservices/assets/84327394/6ffe82f5-bf4c-4d42-897c-79605bffdb3d)
-
-
-
-# `Gateway`
-
-It simplifies client-microservice communication and allows microservices to remain isolated from each other, facilitating the maintenance, scalability, and evolution of the system as a whole.
-
-This tutorial is available in [Portuguese](README-portuguese.md)
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request to the repository.
