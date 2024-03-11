@@ -1,5 +1,6 @@
 package com.vinicius.stock.controller;
 
+import com.vinicius.stock.dto.BrandResponse;
 import com.vinicius.stock.dto.ProductResponse;
 import com.vinicius.stock.service.StockService;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,23 @@ public class StockController {
     @ResponseStatus(HttpStatus.OK)
     public Flux<ProductResponse> getProductsBySize(@PathVariable String size){
         return service.ListProductsBySize(size);
+    }
+
+    @GetMapping("/brand/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<BrandResponse> getBrandById(@PathVariable UUID id) {
+        return service.findBrandById(id);
+    }
+
+    @GetMapping("/brand")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<BrandResponse> ListAllBrands() {
+        return service.ListAllBrands();
+    }
+
+    @GetMapping("/brand/name/{brandName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<BrandResponse> getBrandsByName(@PathVariable String brandName) {
+        return service.ListBrandsByName(brandName);
     }
 }

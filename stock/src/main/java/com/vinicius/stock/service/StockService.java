@@ -1,5 +1,6 @@
 package com.vinicius.stock.service;
 
+import com.vinicius.stock.dto.BrandResponse;
 import com.vinicius.stock.dto.ProductResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,4 +88,33 @@ public class StockService {
                 .retrieve()
                 .bodyToFlux(ProductResponse.class);
     }
+
+    public Mono<BrandResponse> findBrandById(UUID id) {
+        logger.info("Acessando marcas cadastradas no estoque por id");
+        return webClient
+                .get()
+                .uri("/brand/" + id)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(BrandResponse.class);
+    }
+
+    public Flux<BrandResponse> ListAllBrands() {
+        logger.info("Listando marcas cadastradas no estoque");
+        return webClient
+                .get()
+                .uri("/brand")
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(BrandResponse.class);
+    }
+
+    public Flux<BrandResponse> ListBrandsByName(String brandName){
+        logger.info("listando marcas por nome");
+        return webClient
+                .get()
+                .uri("/brand/name/" + brandName)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(BrandResponse.class);}
 }
