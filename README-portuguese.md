@@ -90,15 +90,15 @@ GET /fallback - Mostra uma mensagem quando o serviço está indisponível
 
 `API STOCK`
 ```
-GET /product - Lista produtos
-GET /product/{id} - Lista produto por id
-GET /product/category/{category} - Lista produtos por categoria
-GET /product/name/{name} - Lista produtos por nome
-GET /product/color/{color} - Lista produtos por cor
-GET /product/size/{size} - Lista produtos por tamanho
-GET /brand - Lista marcas
-GET /brand/{id} - Lista marcas por id
-GET /brand/{brandName} - Lista marcas por nome
+GET /stock/product - Lista produtos
+GET /stock/product/{id} - Lista produto por id
+GET /stock/product/category/{category} - Lista produtos por categoria
+GET /stock/product/name/{name} - Lista produtos por nome
+GET /stock/product/color/{color} - Lista produtos por cor
+GET /stock/product/size/{size} - Lista produtos por tamanho
+GET /stock/brand - Lista marcas
+GET /stock/brand/{id} - Lista marcas por id
+GET /stock/brand/{brandName} - Lista marcas por nome
 ```
 
 ## Contributing
