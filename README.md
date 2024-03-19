@@ -90,15 +90,15 @@ GET /fallback - shows a message when the service is down
 
 `API STOCK`
 ```
-GET /product - List Products
-GET /product/{id} - List product by id
-GET /product/category/{category} - List products by category
-GET /product/name/{name} - List products by name
-GET /product/color/{color} - List products by color
-GET /product/size/{size} - List products by size
-GET /brand - List brands
-GET /brand/{id} - List brands by id
-GET /brand/{brandName} - List brands by name
+GET /stock/product - List Products
+GET /stock/product/{id} - List product by id
+GET /stock/product/category/{category} - List products by category
+GET /stock/product/name/{name} - List products by name
+GET /stock/product/color/{color} - List products by color
+GET /stock/product/size/{size} - List products by size
+GET /stock/brand - List brands
+GET /stock/brand/{id} - List brands by id
+GET /stock/brand/{brandName} - List brands by name
 ```
 
 ## Contributing
