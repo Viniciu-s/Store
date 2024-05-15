@@ -24,7 +24,7 @@ public class Brand implements Serializable {
     @Column(nullable = false)
     private String brandName;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Product> products;
 

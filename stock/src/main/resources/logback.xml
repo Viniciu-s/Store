@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_DIR" value="product/logs/app"/>
-    <property name="LOG_DIR_INFO" value="product/logs/info"/>
+    <property name="LOG_DIR" value="stock/logs/app"/>
+    <property name="LOG_DIR_INFO" value="stock/logs/info"/>
 
     <!--    Log console-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -35,7 +35,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.vinicius.product" level="info" >
+    <logger name="com.vinicius.stock" level="info" >
         <appender-ref ref="app"/>
         <appender-ref ref="STDOUT"/>
     </logger>

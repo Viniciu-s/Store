@@ -63,11 +63,6 @@ public class ProductController {
         return deletedProduct ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/category/{category}")
-    public List<ProductResponse> getProductsByCategory(@PathVariable String category) {
-        return service.listProductsByCategory(category);
-    }
-
     @GetMapping("/name/{name}")
     public List<ProductResponse> getProductsByName(@PathVariable String name) {
         return service.listProductsByName(name);

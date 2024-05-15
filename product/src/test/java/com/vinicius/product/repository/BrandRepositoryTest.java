@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,12 +31,17 @@ public class BrandRepositoryTest {
     private static final Logger logger = LoggerFactory.getLogger(BrandRepositoryTest.class);
 
     @Test
-    @DisplayName("Sucesso ao consultar marca por nome")
+    @DisplayName("Sucesso ao consultar marca por nome 1")
     void findByBrandNameCase1() {
         String brandName = "adidas";
-        List<Product> adidasProducts = List.of(
-                new Product()
-        );
+        Product product = new Product();
+        product.setName("Product Name");
+        product.setPrice(new BigDecimal("10.00"));
+        product.setImage("Product Image");
+        product.setColor("Product Color");
+        product.setSize("Product Size");
+        product.setDescription("Product Description");
+        List<Product> adidasProducts = List.of(product);
         BrandResponse brandResponse = new BrandResponse(UUID.randomUUID(), "adidas", adidasProducts);
         this.createBrand(brandResponse);
 
@@ -46,7 +52,7 @@ public class BrandRepositoryTest {
     }
 
     @Test
-    @DisplayName("Sucesso ao consultar marca por nome")
+    @DisplayName("Sucesso ao consultar marca por nome 2")
     void findByBrandNameCase2() {
         String brandName = "adidas";
 

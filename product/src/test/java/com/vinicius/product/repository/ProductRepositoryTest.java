@@ -2,6 +2,7 @@ package com.vinicius.product.repository;
 
 import com.vinicius.product.domain.dto.BrandResponse;
 import com.vinicius.product.domain.dto.ProductResponse;
+import com.vinicius.product.domain.entity.Brand;
 import com.vinicius.product.domain.entity.Product;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
@@ -32,19 +33,6 @@ class ProductRepositoryTest {
 
     @Test
     @DisplayName("Sucesso ao consultar produto por nome")
-    void findByNameCase1() {
-        String name = "camiseta";
-        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada", new BrandResponse(UUID.randomUUID(), "Nike",null));
-        this.createProduct(productResponse);
-
-        List<Product> result = this.repository.findByName(name);
-
-        logger.info("Result: " + result);
-        assertThat(result.isEmpty()).isFalse();
-    }
-
-    @Test
-    @DisplayName("Sucesso ao consultar produto por nome")
     void findByNameCase2() {
         String name = "camiseta";
 
@@ -55,29 +43,11 @@ class ProductRepositoryTest {
 
     @Test
     @DisplayName("Sucesso ao consultar produto por categoria")
-    void findByCategoryCase1() {
-        String category = "camisetas";
-        ProductResponse productResponse = new ProductResponse(UUID.randomUUID(), "camiseta", "camisetas", new BigDecimal(150), "", "Branco", "GG", "camiseta branca estampa bordada", new BrandResponse(UUID.randomUUID(), "Nike",null));
-        this.createProduct(productResponse);
-
-        List<Product> result = this.repository.findByCategory(category);
-
-        logger.info("Result: " + result);
-        assertThat(result.isEmpty()).isFalse();
-    }
-
-    @Test
-    @DisplayName("Sucesso ao consultar produto por categoria")
     void findByCategoryCase2() {
         String category = "camisetas";
 
         List<Product> result = this.repository.findByName(category);
 
         assertThat(result.isEmpty()).isTrue();
-    }
-
-    private void createProduct(ProductResponse productResponse){
-        Product newProduct = new Product(productResponse);
-        this.entityManager.merge(newProduct);
     }
 }

@@ -13,7 +13,6 @@ public interface IProductService {
     ProductResponse searchProductForId(UUID id);
     ProductResponse updateProduct(UUID id, ProductRequest productRequest);
     boolean deleteProduct(UUID id);
-    List<ProductResponse> listProductsByCategory(String category);
     List<ProductResponse> listProductsByName(String name);
     List<ProductResponse> listProductsByColor(String color);
     List<ProductResponse> listProductsBySize(String size);

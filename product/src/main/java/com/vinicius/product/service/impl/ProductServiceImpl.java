@@ -76,14 +76,6 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
-    public List<ProductResponse> listProductsByCategory(String category) {
-        logger.info("Listando produtos por categoria");
-        List<Product> products = repository.findByCategory(category);
-        return products.stream()
-                .map(productMapper::productToProductResponse)
-                .collect(Collectors.toList());
-    }
-
     public List<ProductResponse> listProductsByName(String name) {
         logger.info("Listando produtos por nome");
         List<Product> products = repository.findByName(name);

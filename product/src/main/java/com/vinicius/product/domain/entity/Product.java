@@ -23,8 +23,6 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String category;
-    @Column(nullable = false)
     private BigDecimal price;
     @Column(nullable = false)
     private String image;
@@ -34,36 +32,43 @@ public class Product implements Serializable {
     private String size;
     @Column(nullable = false)
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     @JsonBackReference
     private Brand brand;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonBackReference
+    private Category category;
+
     public Product() {
     }
 
-    public Product(UUID id, String name, String category, BigDecimal price, String image, String color, String size, String description, Brand brand) {
+    public Product(UUID id, String name, BigDecimal price, String image, String color, String size, String description,
+                   Brand brand, Category category) {
         this.id = id;
         this.name = name;
-        this.category = category;
         this.price = price;
         this.image = image;
         this.color = color;
         this.size = size;
         this.description = description;
         this.brand = brand;
+        this.category = category;
     }
 
     public Product(ProductResponse productResponse) {
         this.id = productResponse.id();
         this.name = productResponse.name();
-        this.category = productResponse.category();
         this.price = productResponse.price();
         this.image = productResponse.image();
         this.color = productResponse.color();
         this.size = productResponse.size();
         this.description = productResponse.description();
         this.brand = new Brand(productResponse.brand());
+        this.category = new Category(productResponse.category());
     }
 
     public UUID getId() {
@@ -80,14 +85,6 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public BigDecimal getPrice() {
@@ -138,17 +135,28 @@ public class Product implements Serializable {
         this.brand = brand;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(category, product.category) && Objects.equals(price, product.price) && Objects.equals(image, product.image) && Objects.equals(color, product.color) && Objects.equals(size, product.size) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price)
+                && Objects.equals(image, product.image) && Objects.equals(color, product.color)
+                && Objects.equals(size, product.size) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand) &&
+                Objects.equals(category, product.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, price, image, color, size, description, brand);
+        return Objects.hash(id, name, price, image, color, size, description, brand, category);
     }
 
     @Override
@@ -156,13 +164,13 @@ public class Product implements Serializable {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 ", color='" + color + '\'' +
                 ", size='" + size + '\'' +
                 ", description='" + description + '\'' +
                 ", brand=" + brand +
+                ", category=" + category +
                 '}';
     }
 }

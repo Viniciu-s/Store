@@ -1,6 +1,7 @@
 package com.vinicius.stock.service;
 
 import com.vinicius.stock.dto.BrandResponse;
+import com.vinicius.stock.dto.CategoryResponse;
 import com.vinicius.stock.dto.ProductResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,6 @@ public class StockService {
                 .baseUrl("http://localhost:8080")
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString("username:password".getBytes()))
                 .build();
-
     }
 
     public Mono<ProductResponse> findAProductById(UUID id) {
@@ -44,16 +44,6 @@ public class StockService {
         return webClient
                 .get()
                 .uri("/product")
-                .accept(APPLICATION_JSON)
-                .retrieve()
-                .bodyToFlux(ProductResponse.class);
-    }
-
-    public Flux<ProductResponse> ListProductsByCategory(String category){
-        logger.info("listando produtos por categoria");
-        return webClient
-                .get()
-                .uri("/product/category/" + category)
                 .accept(APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(ProductResponse.class);
@@ -116,5 +106,36 @@ public class StockService {
                 .uri("/brand/name/" + brandName)
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(BrandResponse.class);}
+                .bodyToFlux(BrandResponse.class);
+    }
+
+    public Mono<CategoryResponse> findCategoryById(UUID id) {
+        logger.info("Acessando categoria cadastradas no estoque por id");
+        return webClient
+                .get()
+                .uri("/category/" + id)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(CategoryResponse.class);
+    }
+
+    public Flux<CategoryResponse> ListAllCategories() {
+        logger.info("Listando categorias cadastradas no estoque");
+        return webClient
+                .get()
+                .uri("/category")
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(CategoryResponse.class);
+    }
+
+    public Flux<CategoryResponse> ListCategoryByName(String categoryName){
+        logger.info("listando categoria por nome");
+        return webClient
+                .get()
+                .uri("/category/name/" + categoryName)
+                .accept(APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(CategoryResponse.class);
+    }
 }

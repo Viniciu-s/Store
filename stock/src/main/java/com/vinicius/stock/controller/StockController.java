@@ -1,6 +1,7 @@
 package com.vinicius.stock.controller;
 
 import com.vinicius.stock.dto.BrandResponse;
+import com.vinicius.stock.dto.CategoryResponse;
 import com.vinicius.stock.dto.ProductResponse;
 import com.vinicius.stock.service.StockService;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,6 @@ public class StockController {
     public Flux<ProductResponse> ListAllProducts() {
         return service.ListAllProducts();
 
-    }
-
-    @GetMapping("/product/category/{category}")
-    @ResponseStatus(HttpStatus.OK)
-    public Flux<ProductResponse> getProductsByCategory(@PathVariable String category){
-        return service.ListProductsByCategory(category);
     }
 
     @GetMapping("/product/name/{name}")
@@ -74,5 +69,23 @@ public class StockController {
     @ResponseStatus(HttpStatus.OK)
     public Flux<BrandResponse> getBrandsByName(@PathVariable String brandName) {
         return service.ListBrandsByName(brandName);
+    }
+
+    @GetMapping("/category/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<CategoryResponse> getCategoryById(@PathVariable UUID id) {
+        return service.findCategoryById(id);
+    }
+
+    @GetMapping("/category")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<CategoryResponse> ListAllCategories() {
+        return service.ListAllCategories();
+    }
+
+    @GetMapping("/category/name/{categoryName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<CategoryResponse> getCategoryByName(@PathVariable String categoryName) {
+        return service.ListCategoryByName(categoryName);
     }
 }

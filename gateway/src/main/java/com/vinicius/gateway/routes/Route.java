@@ -42,6 +42,14 @@ public class Route {
                                         .setFallbackUri("forward:/fallback"))
                                 .filter(filter))
                         .uri("http://localhost:8082/"))
+                .route("category", r -> r
+                        .path("/category/**")
+                        .filters(f -> f
+                                .circuitBreaker(c -> c
+                                        .setName("category")
+                                        .setFallbackUri("forward:/fallback"))
+                                .filter(filter))
+                        .uri("http://localhost:8082/"))
                 .route("notification", r -> r
                         .path("/notification/**")
                         .filters(f -> f
@@ -57,6 +65,14 @@ public class Route {
                                         .setFallbackUri("forward:/fallback"))
                                 .filter(filter))
                         .uri("http://localhost:8084/"))
+                .route("orders", r -> r
+                        .path("/orders/**")
+                        .filters(f -> f
+                                .circuitBreaker(c -> c
+                                        .setName("orders")
+                                        .setFallbackUri("forward:/fallback"))
+                                .filter(filter))
+                        .uri("http://localhost:8086/"))
                 .build();
     }
 }

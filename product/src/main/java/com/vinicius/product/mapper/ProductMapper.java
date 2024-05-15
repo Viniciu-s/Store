@@ -1,10 +1,8 @@
 package com.vinicius.product.mapper;
 
-import com.vinicius.product.domain.dto.BrandRequest;
-import com.vinicius.product.domain.dto.BrandResponse;
-import com.vinicius.product.domain.dto.ProductRequest;
-import com.vinicius.product.domain.dto.ProductResponse;
+import com.vinicius.product.domain.dto.*;
 import com.vinicius.product.domain.entity.Brand;
+import com.vinicius.product.domain.entity.Category;
 import com.vinicius.product.domain.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -21,4 +19,8 @@ public interface ProductMapper {
     Brand brandRequestToBrand(BrandRequest brandRequest);
 
     BrandResponse brandToBrandResponse(Brand brand);
+
+    Category categoryRequestToCategory(CategoryRequest categoryRequest);
+
+    CategoryResponse categoryToCategoryResponse(Category category);
 }
