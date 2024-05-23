@@ -38,6 +38,7 @@ public class CategoryServiceImpl implements ICategoryServiceImpl {
     public CategoryResponse createCategory(CategoryRequest categoryRequest) {
         logger.info("Criando categorias");
         Category category = productMapper.categoryRequestToCategory(categoryRequest);
+        if (category == null) {throw new NullPointerException("Categoria não pode ser nula");}
         repository.save(category);
         rabbitTemplate.convertAndSend("product.ex", "", category);
         return productMapper.categoryToCategoryResponse(category);
@@ -47,6 +48,9 @@ public class CategoryServiceImpl implements ICategoryServiceImpl {
     public List<CategoryResponse> listCategory() {
         logger.debug("Listando categorias");
         List<Category> categories = repository.findAll();
+        if (categories.isEmpty()) {
+            throw new CategoryNotFoundException("Categoria não encontrada");
+        }
         return categories.stream()
                 .map(productMapper::categoryToCategoryResponse)
                 .collect(Collectors.toList());
@@ -64,6 +68,9 @@ public class CategoryServiceImpl implements ICategoryServiceImpl {
     public List<CategoryResponse> listCategoryByName(String categoryName) {
         logger.info("Listando categorias por nome");
         List<Category> categories = repository.findByCategoryName(categoryName);
+        if (categories.isEmpty()) {
+            throw new CategoryNotFoundException("Categoria não encontrada com o nome: " + categoryName);
+        }
         return categories.stream()
                 .map(productMapper::categoryToCategoryResponse)
                 .collect(Collectors.toList());

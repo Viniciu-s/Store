@@ -37,6 +37,9 @@ public class BrandServiceImpl implements IBrandService {
     public BrandResponse createBrand(BrandRequest brandRequest) {
         logger.info("Criando marcas");
         Brand brand = productMapper.brandRequestToBrand(brandRequest);
+        if (brand == null) {
+            throw new NullPointerException("Marca não pode ser nula");
+        }
         repository.save(brand);
         rabbitTemplate.convertAndSend("product.ex", "", brand);
         return productMapper.brandToBrandResponse(brand);
@@ -45,6 +48,9 @@ public class BrandServiceImpl implements IBrandService {
     public List<BrandResponse> listBrands() {
         logger.debug("Listando marcas");
         List<Brand> brands = repository.findAll();
+        if (brands.isEmpty()) {
+            throw new BrandNotFoundException("Marca não encontrada");
+        }
         return brands.stream()
                 .map(productMapper::brandToBrandResponse)
                 .collect(Collectors.toList());
@@ -60,6 +66,9 @@ public class BrandServiceImpl implements IBrandService {
     public List<BrandResponse> listBrandsByName(String brandName) {
         logger.info("Listando Marcas por nome");
         List<Brand> brands = repository.findByBrandName(brandName);
+        if (brands.isEmpty()) {
+            throw new BrandNotFoundException("Marca não encontrada com o nome: " + brandName);
+        }
         return brands.stream()
                 .map(productMapper::brandToBrandResponse)
                 .collect(Collectors.toList());

@@ -37,6 +37,7 @@ public class ProductServiceImpl implements IProductService {
     public ProductResponse createProduct(ProductRequest productRequest) {
         logger.info("Criando produtos");
         Product product = productMapper.productRequestToProduct(productRequest);
+        if (product == null) {throw new NullPointerException("Produto não pode ser nulo");}
         repository.save(product);
         rabbitTemplate.convertAndSend("product.ex", "", product);
         return productMapper.productToProductResponse(product);
@@ -45,6 +46,9 @@ public class ProductServiceImpl implements IProductService {
     public List<ProductResponse> listProducts() {
         logger.info("Listando produtos");
         List<Product> products = repository.findAll();
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("Produto não encontrado");
+        }
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
@@ -79,14 +83,21 @@ public class ProductServiceImpl implements IProductService {
     public List<ProductResponse> listProductsByName(String name) {
         logger.info("Listando produtos por nome");
         List<Product> products = repository.findByName(name);
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("Nenhum produto encontrado com o nome: " + name);
+        }
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
     }
 
+
     public List<ProductResponse> listProductsByColor(String color) {
         logger.info("Listando produtos por cor");
         List<Product> products = repository.findByColor(color);
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("Nenhum produto encontrado com a cor: " + color);
+        }
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
@@ -95,6 +106,9 @@ public class ProductServiceImpl implements IProductService {
     public List<ProductResponse> listProductsBySize(String size) {
         logger.info("Listando produtos por tamanho");
         List<Product> products = repository.findBySize(size);
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("Nenhum produto encontrado com o tamanho: " + size);
+        }
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
