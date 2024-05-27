@@ -2,9 +2,9 @@ package com.vinicius.product.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vinicius.product.domain.dto.ProductResponse;
+import com.vinicius.product.domain.enums.ProductStatus;
 import jakarta.persistence.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,9 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,6 +30,9 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     @JsonBackReference
@@ -47,7 +47,7 @@ public class Product implements Serializable {
     }
 
     public Product(UUID id, String name, BigDecimal price, String image, String color, String size, String description,
-                   Brand brand, Category category) {
+                   ProductStatus status ,Brand brand, Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -55,6 +55,7 @@ public class Product implements Serializable {
         this.color = color;
         this.size = size;
         this.description = description;
+        this.status = status;
         this.brand = brand;
         this.category = category;
     }
@@ -67,8 +68,9 @@ public class Product implements Serializable {
         this.color = productResponse.color();
         this.size = productResponse.size();
         this.description = productResponse.description();
-        this.brand = new Brand(productResponse.brand());
-        this.category = new Category(productResponse.category());
+        this.status = productResponse.status();
+        this.brand = new Brand(productResponse.brand().id(), productResponse.brand().brandName());
+        this.category = new Category(productResponse.category().id(), productResponse.category().categoryName());
     }
 
     public UUID getId() {
@@ -125,6 +127,14 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ProductStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
     }
 
     public Brand getBrand() {

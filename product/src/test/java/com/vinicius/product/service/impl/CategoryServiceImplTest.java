@@ -51,8 +51,7 @@ class CategoryServiceImplTest {
             Category category = new Category();
             CategoryResponse categoryResponse = new CategoryResponse(
                     categoryRequest.id(),
-                    categoryRequest.categoryName(),
-                    null
+                    categoryRequest.categoryName()
             );
 
             //Mocks
@@ -99,8 +98,7 @@ class CategoryServiceImplTest {
             Category category = new Category();
             CategoryResponse categoryResponse = new CategoryResponse(
                     UUID.randomUUID(),
-                    "Categoria 1",
-                    null
+                    "Categoria 1"
             );
 
             //Mocks
@@ -138,8 +136,7 @@ class CategoryServiceImplTest {
             Category category = new Category();
             CategoryResponse categoryResponse = new CategoryResponse(
                     id,
-                    "Categoria 1",
-                    null
+                    "Categoria 1"
             );
 
             //mocks
@@ -165,7 +162,7 @@ class CategoryServiceImplTest {
 
             // Act and Assert
             assertThrows(CategoryNotFoundException.class, () -> categoryService.searchCategoryForId(id));
-            }
+        }
     }
 
     @Nested
@@ -179,8 +176,7 @@ class CategoryServiceImplTest {
             Category category = new Category();
             CategoryResponse categoryResponse = new CategoryResponse(
                     UUID.randomUUID(),
-                    "Categoria 1",
-                    null
+                    "Categoria 1"
             );
 
             //Mocks
@@ -193,7 +189,7 @@ class CategoryServiceImplTest {
             assertFalse(result.isEmpty());
             assertEquals(1, result.size());
             assertEquals(categoryResponse, result.get(0));
-            }
+        }
 
         @Test
         @DisplayName("Deve lançar uma exceção ao tentar listar todas as categorias por nome e não encontrar nenhuma")
@@ -223,8 +219,7 @@ class CategoryServiceImplTest {
             Category category = new Category();
             CategoryResponse categoryResponse = new CategoryResponse(
                     id,
-                    "Categoria 1",
-                    null
+                    "Categoria 1"
             );
 
             //Mocks

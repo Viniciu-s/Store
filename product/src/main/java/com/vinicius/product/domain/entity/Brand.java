@@ -1,7 +1,6 @@
 package com.vinicius.product.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.vinicius.product.domain.dto.BrandResponse;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -31,16 +30,9 @@ public class Brand implements Serializable {
     public Brand() {
     }
 
-    public Brand(BrandResponse brandResponse) {
-        this.id = brandResponse.id();
-        this.brandName = brandResponse.brandName();
-        this.products = brandResponse.products();
-    }
-
-    public Brand(UUID id, String brandName, List<Product> products) {
+    public Brand(UUID id, String brandName) {
         this.id = id;
         this.brandName = brandName;
-        this.products = products;
     }
 
     public UUID getId() {
@@ -72,12 +64,12 @@ public class Brand implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Brand brand = (Brand) o;
-        return Objects.equals(id, brand.id) && Objects.equals(brandName, brand.brandName) && Objects.equals(products, brand.products);
+        return Objects.equals(id, brand.id) && Objects.equals(brandName, brand.brandName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brandName, products);
+        return Objects.hash(id, brandName);
     }
 
     @Override
@@ -85,7 +77,6 @@ public class Brand implements Serializable {
         return "Brand{" +
                 "id=" + id +
                 ", brandName='" + brandName + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

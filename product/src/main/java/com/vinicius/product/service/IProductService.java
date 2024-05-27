@@ -16,4 +16,5 @@ public interface IProductService {
     List<ProductResponse> listProductsByName(String name);
     List<ProductResponse> listProductsByColor(String color);
     List<ProductResponse> listProductsBySize(String size);
+    ProductResponse reserveProduct(UUID id);
 }

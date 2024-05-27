@@ -1,16 +1,16 @@
 package com.vinicius.product.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.vinicius.product.domain.dto.CategoryResponse;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,16 +26,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(UUID id, String categoryName, List<Product> products) {
+    public Category(UUID id, String categoryName) {
         this.id = id;
         this.categoryName = categoryName;
-        this.products = products;
-    }
-
-    public Category(CategoryResponse categoryResponse) {
-        this.id = categoryResponse.id();
-        this.categoryName = categoryResponse.categoryName();
-        this.products = categoryResponse.products();
     }
 
     public UUID getId() {
@@ -67,12 +60,12 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(categoryName, category.categoryName) && Objects.equals(products, category.products);
+        return Objects.equals(id, category.id) && Objects.equals(categoryName, category.categoryName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, categoryName, products);
+        return Objects.hash(id, categoryName);
     }
 
     @Override
@@ -80,7 +73,6 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", categoryName='" + categoryName + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

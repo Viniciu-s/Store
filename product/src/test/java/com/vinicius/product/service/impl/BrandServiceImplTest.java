@@ -50,8 +50,7 @@ class BrandServiceImplTest {
             Brand brand = new Brand();
             BrandResponse brandResponse = new BrandResponse(
                     brandRequest.id(),
-                    brandRequest.brandName(),
-                    null
+                    brandRequest.brandName()
             );
 
             //Mocks
@@ -98,8 +97,7 @@ class BrandServiceImplTest {
             Brand brand = new Brand();
             BrandResponse brandResponse = new BrandResponse(
                     UUID.randomUUID(),
-                    "Marca",
-                    null
+                    "Marca"
             );
 
             //Mocks
@@ -136,8 +134,7 @@ class BrandServiceImplTest {
             Brand brand = new Brand();
             BrandResponse brandResponse = new BrandResponse(
                     id,
-                    "Marca",
-                    null
+                    "Marca"
             );
 
             //Mocks
@@ -173,8 +170,7 @@ class BrandServiceImplTest {
             Brand brand = new Brand();
             BrandResponse brandResponse = new BrandResponse(
                     UUID.randomUUID(),
-                    brandName,
-                    null
+                    brandName
             );
 
             //Mocks
@@ -217,8 +213,7 @@ class BrandServiceImplTest {
             Brand brand = new Brand();
             BrandResponse brandResponse = new BrandResponse(
                     id,
-                    "Marca",
-                    null
+                    "Marca"
             );
 
             //Mocks

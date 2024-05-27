@@ -2,6 +2,7 @@ package com.vinicius.product.controller;
 
 import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
+import com.vinicius.product.exceptions.ProductNotFoundException;
 import com.vinicius.product.service.impl.ProductServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
@@ -76,5 +77,19 @@ public class ProductController {
     @GetMapping("/size/{size}")
     public List<ProductResponse> getProductsBySize(@PathVariable String size) {
         return service.listProductsBySize(size);
+    }
+
+    @PutMapping("{id}/reserve")
+    public ResponseEntity<EntityModel<ProductResponse>> reserveProduct(@PathVariable UUID id) {
+        try {
+            ProductResponse product = service.reserveProduct(id);
+            EntityModel<ProductResponse> resource = EntityModel.of(product);
+            resource.add(Link.of("/product/" + id).withSelfRel());
+            return ResponseEntity.ok(resource);
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

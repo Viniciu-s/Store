@@ -3,6 +3,7 @@ package com.vinicius.product.service.impl;
 import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
 import com.vinicius.product.domain.entity.Product;
+import com.vinicius.product.domain.enums.ProductStatus;
 import com.vinicius.product.exceptions.ProductNotFoundException;
 import com.vinicius.product.mapper.ProductMapper;
 import com.vinicius.product.repository.ProductRepository;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -112,5 +114,20 @@ public class ProductServiceImpl implements IProductService {
         return products.stream()
                 .map(productMapper::productToProductResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ProductResponse reserveProduct(UUID id) {
+        logger.info("Reservando produto com id: {}", id);
+
+        Optional<Product> productOptional = repository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setStatus(ProductStatus.RESERVADO);
+            repository.save(product);
+            return productMapper.productToProductResponse(product);
+        } else {
+            throw new ProductNotFoundException("Produto não encontrado com o id: " + id);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.vinicius.product.service.impl;
 import com.vinicius.product.domain.dto.ProductRequest;
 import com.vinicius.product.domain.dto.ProductResponse;
 import com.vinicius.product.domain.entity.Product;
+import com.vinicius.product.domain.enums.ProductStatus;
 import com.vinicius.product.exceptions.ProductNotFoundException;
 import com.vinicius.product.mapper.ProductMapper;
 import com.vinicius.product.repository.ProductRepository;
@@ -56,6 +57,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -68,6 +70,7 @@ class ProductServiceImplTest {
                     productRequest.color(),
                     productRequest.size(),
                     productRequest.description(),
+                    productRequest.status(),
                     null,
                     null);
 
@@ -107,6 +110,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -135,6 +139,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -181,6 +186,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -226,6 +232,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -238,6 +245,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -267,6 +275,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -330,6 +339,7 @@ class ProductServiceImplTest {
                     "color",
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -378,6 +388,7 @@ class ProductServiceImplTest {
                     color,
                     "size",
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
@@ -425,6 +436,7 @@ class ProductServiceImplTest {
                     "color",
                     size,
                     "description",
+                    ProductStatus.DISPONIVEL,
                     null,
                     null);
 
